@@ -5,77 +5,132 @@ from openai import OpenAI
 st.set_page_config(
     page_title="✈️ 여행 챗봇",
     page_icon="🌍",
-    layout="centered"
+    layout="wide"
 )
 
-# CSS 스타일 적용 (하얀색 + 푸른색 테마)
+# CSS 스타일
 st.markdown("""
 <style>
 
 /* 전체 배경 */
 .stApp {
-    background-color: #f4f9ff;
+    background-color: white;
 }
 
-/* 제목 스타일 */
+/* 메인 영역 */
+.main {
+    background-color: white;
+}
+
+/* 제목 */
 h1 {
     color: #1e88e5;
     text-align: center;
 }
 
-/* 설명 문구 */
-p {
-    color: #333333;
+/* 텍스트 */
+p, label, div {
+    color: #222222;
+}
+
+/* 사이드바 */
+section[data-testid="stSidebar"] {
+    background-color: #f5f9ff;
+    border-right: 2px solid #d6e9ff;
 }
 
 /* 입력창 */
 .stTextInput input {
+    background-color: white;
+    color: black;
     border: 2px solid #64b5f6;
     border-radius: 10px;
 }
 
 /* 채팅 입력창 */
 [data-testid="stChatInput"] {
-    border-top: 2px solid #90caf9;
     background-color: white;
+    border-top: 2px solid #90caf9;
 }
 
 /* 사용자 메시지 */
 [data-testid="chatAvatarIcon-user"] + div {
-    background-color: #bbdefb;
+    background-color: #e3f2fd;
     border-radius: 12px;
-    padding: 10px;
+    padding: 12px;
 }
 
 /* AI 메시지 */
 [data-testid="chatAvatarIcon-assistant"] + div {
     background-color: white;
-    border-radius: 12px;
-    padding: 10px;
     border: 1px solid #90caf9;
-}
-
-/* 버튼 */
-.stButton button {
-    background-color: #1e88e5;
-    color: white;
-    border-radius: 10px;
-    border: none;
-}
-
-.stButton button:hover {
-    background-color: #1565c0;
+    border-radius: 12px;
+    padding: 12px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# 제목 및 설명
-st.title("✈️ 여행 도우미 챗봇")
+# 제목
+st.title("✈️ AI 여행 도우미")
 
+# =========================
+# 사이드바 (여행 정보 설정)
+# =========================
+st.sidebar.title("🌍 여행 설정")
+
+# 여행지 선택
+destination = st.sidebar.selectbox(
+    "여행지 선택",
+    [
+        "서울",
+        "부산",
+        "도쿄",
+        "오사카",
+        "파리",
+        "런던",
+        "뉴욕",
+        "방콕"
+    ]
+)
+
+# 여행 기간 선택
+travel_days = st.sidebar.slider(
+    "여행 일자",
+    min_value=1,
+    max_value=30,
+    value=3
+)
+
+# 여행 스타일 선택
+travel_style = st.sidebar.multiselect(
+    "여행 스타일",
+    [
+        "맛집",
+        "관광",
+        "쇼핑",
+        "휴양",
+        "액티비티",
+        "사진 명소",
+        "야경",
+        "카페"
+    ]
+)
+
+# 선택 내용 표시
+st.sidebar.markdown("---")
+st.sidebar.write(f"📍 여행지: {destination}")
+st.sidebar.write(f"📅 여행 기간: {travel_days}일")
+
+if travel_style:
+    st.sidebar.write("🎒 여행 스타일:")
+    for style in travel_style:
+        st.sidebar.write(f"- {style}")
+
+# 설명
 st.write(
-    "여행지 추천, 맛집, 일정 계획, 교통 정보까지! 🌍\n"
-    "여행과 관련된 질문을 자유롭게 물어보세요."
+    "왼쪽에서 여행 정보를 설정하고 "
+    "채팅으로 여행 계획을 물어보세요! 🌍"
 )
 
 # API 키 입력
@@ -98,9 +153,11 @@ else:
             {
                 "role": "system",
                 "content": (
-                    "너는 친절한 여행 전문 AI 챗봇이다. "
-                    "사용자의 여행 스타일, 예산, 기간 등을 고려해 "
-                    "여행 추천과 여행 계획을 도와준다."
+                    f"너는 여행 전문 AI 챗봇이다. "
+                    f"사용자의 여행지는 {destination}이고 "
+                    f"여행 기간은 {travel_days}일이다. "
+                    f"여행 스타일은 {', '.join(travel_style)} 이다. "
+                    f"이 정보를 기반으로 여행 추천과 일정을 제안해라."
                 )
             }
         ]
@@ -111,8 +168,8 @@ else:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-    # 사용자 입력
-    if prompt := st.chat_input("어디로 여행 가고 싶나요? ✈️"):
+    # 채팅 입력
+    if prompt := st.chat_input("여행에 대해 질문해보세요 ✈️"):
 
         # 사용자 메시지 저장
         st.session_state.messages.append(
