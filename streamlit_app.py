@@ -8,36 +8,62 @@ st.set_page_config(
     layout="wide"
 )
 
-# CSS 스타일
-# CSS 스타일 (전체 흰색 + 검정 글씨 + 파란 포인트)
+# CSS 스타일 (헤더까지 전체 흰색)
 st.markdown("""
 <style>
 
+/* ========================= */
 /* 전체 앱 */
+/* ========================= */
+
 .stApp {
     background-color: white;
-    color: black;
+    color: black !important;
 }
 
-/* 메인 영역 */
+/* 메인 */
 .main {
     background-color: white;
 }
 
-/* 모든 텍스트 */
-html, body, [class*="css"]  {
-    color: black;
+/* 기본 텍스트 */
+html, body, p, span, label, div {
+    color: black !important;
 }
 
+/* ========================= */
+/* 상단 헤더 */
+/* ========================= */
+
+header {
+    background-color: white !important;
+}
+
+/* Streamlit 헤더 영역 */
+[data-testid="stHeader"] {
+    background-color: white !important;
+}
+
+/* 상단 툴바 */
+[data-testid="stToolbar"] {
+    background-color: white !important;
+}
+
+/* ========================= */
 /* 제목 */
+/* ========================= */
+
 h1 {
-    color: #1e88e5;
+    color: #1e88e5 !important;
     text-align: center;
 }
 
+/* ========================= */
 /* 사이드바 */
+/* ========================= */
+
 section[data-testid="stSidebar"] {
-    background-color: white;
+    background-color: white !important;
     border-right: 2px solid #d6e9ff;
 }
 
@@ -52,7 +78,6 @@ section[data-testid="stSidebar"] {
     border-radius: 10px;
 }
 
-/* placeholder 글씨 */
 .stTextInput input::placeholder {
     color: #666666 !important;
 }
@@ -61,7 +86,6 @@ section[data-testid="stSidebar"] {
 /* Selectbox */
 /* ========================= */
 
-/* 선택 박스 */
 .stSelectbox div[data-baseweb="select"] > div {
     background-color: white !important;
     color: black !important;
@@ -69,19 +93,23 @@ section[data-testid="stSidebar"] {
     border-radius: 10px;
 }
 
-/* 드롭다운 메뉴 */
+.stSelectbox * {
+    color: black !important;
+}
+
+/* 드롭다운 */
 div[role="listbox"] {
     background-color: white !important;
     color: black !important;
 }
 
-/* 드롭다운 항목 */
+/* 드롭다운 옵션 */
 div[role="option"] {
     background-color: white !important;
     color: black !important;
 }
 
-/* 선택된 항목 hover */
+/* hover */
 div[role="option"]:hover {
     background-color: #e3f2fd !important;
     color: black !important;
@@ -98,16 +126,20 @@ div[role="option"]:hover {
     border-radius: 10px;
 }
 
-/* ========================= */
-/* Slider */
-/* ========================= */
-
-.stSlider {
+.stMultiSelect * {
     color: black !important;
 }
 
 /* ========================= */
-/* 채팅 입력창 */
+/* Slider */
+/* ========================= */
+
+.stSlider * {
+    color: black !important;
+}
+
+/* ========================= */
+/* Chat Input */
 /* ========================= */
 
 [data-testid="stChatInput"] {
@@ -124,21 +156,19 @@ div[role="option"]:hover {
 /* 채팅 메시지 */
 /* ========================= */
 
-/* 사용자 메시지 */
 [data-testid="chatAvatarIcon-user"] + div {
-    background-color: #e3f2fd;
+    background-color: #e3f2fd !important;
+    color: black !important;
     border-radius: 12px;
     padding: 12px;
-    color: black;
 }
 
-/* AI 메시지 */
 [data-testid="chatAvatarIcon-assistant"] + div {
-    background-color: white;
+    background-color: white !important;
+    color: black !important;
     border: 1px solid #90caf9;
     border-radius: 12px;
     padding: 12px;
-    color: black;
 }
 
 /* ========================= */
@@ -157,7 +187,7 @@ div[role="option"]:hover {
 }
 
 /* ========================= */
-/* 드롭다운 화살표 */
+/* 아이콘 */
 /* ========================= */
 
 svg {
