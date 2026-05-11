@@ -9,17 +9,24 @@ st.set_page_config(
 )
 
 # CSS 스타일
+# CSS 스타일 (전체 흰색 + 검정 글씨 + 파란 포인트)
 st.markdown("""
 <style>
 
-/* 전체 배경 */
+/* 전체 앱 */
 .stApp {
     background-color: white;
+    color: black;
 }
 
 /* 메인 영역 */
 .main {
     background-color: white;
+}
+
+/* 모든 텍스트 */
+html, body, [class*="css"]  {
+    color: black;
 }
 
 /* 제목 */
@@ -28,36 +35,101 @@ h1 {
     text-align: center;
 }
 
-/* 텍스트 */
-p, label, div {
-    color: #222222;
-}
-
 /* 사이드바 */
 section[data-testid="stSidebar"] {
-    background-color: #f5f9ff;
+    background-color: white;
     border-right: 2px solid #d6e9ff;
 }
 
+/* ========================= */
 /* 입력창 */
+/* ========================= */
+
 .stTextInput input {
-    background-color: white;
-    color: black;
-    border: 2px solid #64b5f6;
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #64b5f6 !important;
     border-radius: 10px;
 }
 
+/* placeholder 글씨 */
+.stTextInput input::placeholder {
+    color: #666666 !important;
+}
+
+/* ========================= */
+/* Selectbox */
+/* ========================= */
+
+/* 선택 박스 */
+.stSelectbox div[data-baseweb="select"] > div {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #64b5f6 !important;
+    border-radius: 10px;
+}
+
+/* 드롭다운 메뉴 */
+div[role="listbox"] {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* 드롭다운 항목 */
+div[role="option"] {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* 선택된 항목 hover */
+div[role="option"]:hover {
+    background-color: #e3f2fd !important;
+    color: black !important;
+}
+
+/* ========================= */
+/* MultiSelect */
+/* ========================= */
+
+.stMultiSelect div[data-baseweb="select"] > div {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #64b5f6 !important;
+    border-radius: 10px;
+}
+
+/* ========================= */
+/* Slider */
+/* ========================= */
+
+.stSlider {
+    color: black !important;
+}
+
+/* ========================= */
 /* 채팅 입력창 */
+/* ========================= */
+
 [data-testid="stChatInput"] {
-    background-color: white;
+    background-color: white !important;
     border-top: 2px solid #90caf9;
 }
+
+[data-testid="stChatInput"] textarea {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* ========================= */
+/* 채팅 메시지 */
+/* ========================= */
 
 /* 사용자 메시지 */
 [data-testid="chatAvatarIcon-user"] + div {
     background-color: #e3f2fd;
     border-radius: 12px;
     padding: 12px;
+    color: black;
 }
 
 /* AI 메시지 */
@@ -66,11 +138,34 @@ section[data-testid="stSidebar"] {
     border: 1px solid #90caf9;
     border-radius: 12px;
     padding: 12px;
+    color: black;
+}
+
+/* ========================= */
+/* 버튼 */
+/* ========================= */
+
+.stButton button {
+    background-color: #1e88e5 !important;
+    color: white !important;
+    border-radius: 10px;
+    border: none;
+}
+
+.stButton button:hover {
+    background-color: #1565c0 !important;
+}
+
+/* ========================= */
+/* 드롭다운 화살표 */
+/* ========================= */
+
+svg {
+    fill: black !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
-
 # 제목
 st.title("✈️ AI 여행 도우미")
 
