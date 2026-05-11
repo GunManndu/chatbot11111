@@ -8,7 +8,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# CSS 스타일 (헤더까지 전체 흰색)
+# CSS 스타일 (전체 다크 모드 + 흰색 글씨)
 st.markdown("""
 <style>
 
@@ -17,36 +17,34 @@ st.markdown("""
 /* ========================= */
 
 .stApp {
-    background-color: white;
-    color: black !important;
+    background-color: #0f1117;
+    color: white !important;
 }
 
 /* 메인 */
 .main {
-    background-color: white;
+    background-color: #0f1117;
 }
 
 /* 기본 텍스트 */
 html, body, p, span, label, div {
-    color: black !important;
+    color: white !important;
 }
 
 /* ========================= */
-/* 상단 헤더 */
+/* 헤더 */
 /* ========================= */
 
 header {
-    background-color: white !important;
+    background-color: #0f1117 !important;
 }
 
-/* Streamlit 헤더 영역 */
 [data-testid="stHeader"] {
-    background-color: white !important;
+    background-color: #0f1117 !important;
 }
 
-/* 상단 툴바 */
 [data-testid="stToolbar"] {
-    background-color: white !important;
+    background-color: #0f1117 !important;
 }
 
 /* ========================= */
@@ -54,7 +52,7 @@ header {
 /* ========================= */
 
 h1 {
-    color: #1e88e5 !important;
+    color: #4da3ff !important;
     text-align: center;
 }
 
@@ -63,8 +61,8 @@ h1 {
 /* ========================= */
 
 section[data-testid="stSidebar"] {
-    background-color: white !important;
-    border-right: 2px solid #d6e9ff;
+    background-color: #161a23 !important;
+    border-right: 1px solid #2c3440;
 }
 
 /* ========================= */
@@ -72,14 +70,15 @@ section[data-testid="stSidebar"] {
 /* ========================= */
 
 .stTextInput input {
-    background-color: white !important;
-    color: black !important;
-    border: 2px solid #64b5f6 !important;
+    background-color: #1c2330 !important;
+    color: white !important;
+    border: 2px solid #4da3ff !important;
     border-radius: 10px;
 }
 
+/* placeholder */
 .stTextInput input::placeholder {
-    color: #666666 !important;
+    color: #b0b0b0 !important;
 }
 
 /* ========================= */
@@ -87,32 +86,33 @@ section[data-testid="stSidebar"] {
 /* ========================= */
 
 .stSelectbox div[data-baseweb="select"] > div {
-    background-color: white !important;
-    color: black !important;
-    border: 2px solid #64b5f6 !important;
+    background-color: #1c2330 !important;
+    color: white !important;
+    border: 2px solid #4da3ff !important;
     border-radius: 10px;
 }
 
+/* selectbox 내부 */
 .stSelectbox * {
-    color: black !important;
+    color: white !important;
 }
 
 /* 드롭다운 */
 div[role="listbox"] {
-    background-color: white !important;
-    color: black !important;
+    background-color: #1c2330 !important;
+    color: white !important;
 }
 
-/* 드롭다운 옵션 */
+/* 옵션 */
 div[role="option"] {
-    background-color: white !important;
-    color: black !important;
+    background-color: #1c2330 !important;
+    color: white !important;
 }
 
 /* hover */
 div[role="option"]:hover {
-    background-color: #e3f2fd !important;
-    color: black !important;
+    background-color: #263042 !important;
+    color: white !important;
 }
 
 /* ========================= */
@@ -120,14 +120,14 @@ div[role="option"]:hover {
 /* ========================= */
 
 .stMultiSelect div[data-baseweb="select"] > div {
-    background-color: white !important;
-    color: black !important;
-    border: 2px solid #64b5f6 !important;
+    background-color: #1c2330 !important;
+    color: white !important;
+    border: 2px solid #4da3ff !important;
     border-radius: 10px;
 }
 
 .stMultiSelect * {
-    color: black !important;
+    color: white !important;
 }
 
 /* ========================= */
@@ -135,7 +135,7 @@ div[role="option"]:hover {
 /* ========================= */
 
 .stSlider * {
-    color: black !important;
+    color: white !important;
 }
 
 /* ========================= */
@@ -143,30 +143,32 @@ div[role="option"]:hover {
 /* ========================= */
 
 [data-testid="stChatInput"] {
-    background-color: white !important;
-    border-top: 2px solid #90caf9;
+    background-color: #0f1117 !important;
+    border-top: 1px solid #2c3440;
 }
 
 [data-testid="stChatInput"] textarea {
-    background-color: white !important;
-    color: black !important;
+    background-color: #1c2330 !important;
+    color: white !important;
 }
 
 /* ========================= */
 /* 채팅 메시지 */
 /* ========================= */
 
+/* 사용자 메시지 */
 [data-testid="chatAvatarIcon-user"] + div {
-    background-color: #e3f2fd !important;
-    color: black !important;
+    background-color: #1d3557 !important;
+    color: white !important;
     border-radius: 12px;
     padding: 12px;
 }
 
+/* AI 메시지 */
 [data-testid="chatAvatarIcon-assistant"] + div {
-    background-color: white !important;
-    color: black !important;
-    border: 1px solid #90caf9;
+    background-color: #1c2330 !important;
+    color: white !important;
+    border: 1px solid #2c3440;
     border-radius: 12px;
     padding: 12px;
 }
@@ -176,14 +178,14 @@ div[role="option"]:hover {
 /* ========================= */
 
 .stButton button {
-    background-color: #1e88e5 !important;
+    background-color: #4da3ff !important;
     color: white !important;
     border-radius: 10px;
     border: none;
 }
 
 .stButton button:hover {
-    background-color: #1565c0 !important;
+    background-color: #2d8cff !important;
 }
 
 /* ========================= */
@@ -191,7 +193,7 @@ div[role="option"]:hover {
 /* ========================= */
 
 svg {
-    fill: black !important;
+    fill: white !important;
 }
 
 </style>
