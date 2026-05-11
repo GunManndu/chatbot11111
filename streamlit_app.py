@@ -1,19 +1,18 @@
 import streamlit as st
 from openai import OpenAI
 
-# 제목 및 설명 표시
-st.title("💬 챗봇")
+# 페이지 설정
+st.set_page_config(page_title="✈️ 여행 챗봇", page_icon="🌍")
+
+# 제목 및 설명
+st.title("✈️ 여행 도우미 챗봇")
 st.write(
-    "이 앱은 OpenAI의 GPT-3.5 모델을 사용하여 응답을 생성하는 간단한 챗봇입니다. "
-    "앱을 사용하려면 OpenAI API 키가 필요하며, "
-    "[여기](https://platform.openai.com/account/api-keys)에서 발급받을 수 있습니다. "
-    "또한 이 앱을 만드는 방법은 "
-    "[공식 튜토리얼](https://docs.streamlit.io/develop/tutorials/llms/build-conversational-apps)을 통해 단계별로 배울 수 있습니다."
+    "여행지 추천, 맛집, 일정 짜기, 준비물, 교통 정보 등 "
+    "여행과 관련된 질문을 자유롭게 물어보세요! 🌍"
 )
 
-# 사용자에게 OpenAI API 키 입력받기
-# 또는 ./streamlit/secrets.toml 파일에 저장 후 st.secrets로 불러올 수도 있습니다.
-openai_api_key = st.text_input("OpenAI API 키", type="password")
+# API 키 입력
+openai_api_key = st.text_input("OpenAI API 키를 입력하세요", type="password")
 
 if not openai_api_key:
     st.info("계속하려면 OpenAI API 키를 입력해주세요.", icon="🗝️")
@@ -22,39 +21,50 @@ else:
     # OpenAI 클라이언트 생성
     client = OpenAI(api_key=openai_api_key)
 
-    # 세션 상태에 메시지 저장용 변수 생성
-    # 새로고침되어도 대화 내역이 유지됩니다.
+    # 대화 기록 저장
     if "messages" not in st.session_state:
-        st.session_state.messages = []
+        st.session_state.messages = [
+            {
+                "role": "system",
+                "content": (
+                    "너는 친절한 여행 전문 AI 챗봇이다. "
+                    "사용자의 여행 스타일, 예산, 기간 등을 고려해 "
+                    "여행지 추천, 일정 계획, 맛집 추천, 교통 안내를 제공한다. "
+                    "답변은 보기 쉽게 정리하고, 필요하면 리스트와 이모지를 사용한다."
+                )
+            }
+        ]
 
-    # 기존 채팅 메시지 출력
+    # 기존 메시지 출력
     for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+        if message["role"] != "system":
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
 
-    # 사용자 입력창 생성
-    if prompt := st.chat_input("무엇이든 물어보세요!"):
+    # 사용자 입력
+    if prompt := st.chat_input("어디로 여행 가고 싶나요? ✈️"):
 
-        # 사용자 메시지 저장 및 출력
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        # 사용자 메시지 저장
+        st.session_state.messages.append(
+            {"role": "user", "content": prompt}
+        )
 
+        # 사용자 메시지 출력
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # OpenAI API를 사용하여 응답 생성
+        # GPT 응답 생성
         stream = client.chat.completions.create(
             model="gpt-3.5-turbo",
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
+            messages=st.session_state.messages,
             stream=True,
         )
 
-        # 응답 스트리밍 출력 및 저장
+        # 응답 출력
         with st.chat_message("assistant"):
             response = st.write_stream(stream)
 
+        # 응답 저장
         st.session_state.messages.append(
             {"role": "assistant", "content": response}
         )
